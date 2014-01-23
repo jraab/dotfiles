@@ -1,3 +1,4 @@
+set nocompatible
 syntax enable
 set number
 set expandtab
