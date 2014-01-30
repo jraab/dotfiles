@@ -113,8 +113,9 @@ PATH=$PATH:/home/jraab/programs:/home/jraab/programs/bowtie2
 PATH=$PATH:/home/jraab/bin/
 export PATH
 
-
+HDF5_DIR=/state/partition1/apps/python/distfiles/old/hdf5-1.8.7/src/.libs/
 export HDF5_DISABLE_VERSION_CHECK=2
 source /magnuson-lab/jraab/virtualenvs/base/bin/activate
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
