@@ -115,7 +115,7 @@ export PATH
 
 HDF5_DIR=/state/partition1/apps/python/distfiles/old/hdf5-1.8.7/src/.libs/
 export HDF5_DISABLE_VERSION_CHECK=2
-source /magnuson-lab/jraab/virtualenvs/base/bin/activate
+source $HOME/virtualenvs/base/bin/activate
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
