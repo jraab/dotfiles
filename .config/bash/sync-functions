@@ -1,0 +1,170 @@
+#!/usr/bin/env bash
+# Project sync functions
+# Source this file from .bashrc: source ~/.config/bash/sync-functions
+
+# Configuration - adjust these to match your setup
+PROJ_LOCAL_BASE="$HOME/proj"
+PROJ_REMOTE_BASE="longleaf.its.unc.edu:/proj/jraablab/users/jraab/"
+EXCLUDE="$HOME/proj/exclude_list.txt"
+
+
+# Sync project up to remote
+syncup() {
+    local project="$1"
+    shift
+    local remote="remote"
+    local rsync_opts=()
+    
+    # Parse arguments - look for remote alias or rsync options
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            staging|prod|remote)
+                remote="$1"
+                ;;
+            --*)
+                rsync_opts+=("$1")
+                ;;
+            *)
+                rsync_opts+=("$1")
+                ;;
+        esac
+        shift
+    done
+    
+    if [[ -z "$project" ]]; then
+        echo "Usage: syncup <project> [remote_alias] [rsync_options...]"
+        echo "Example: syncup project1 --delete"
+        echo "Example: syncup project1 staging --delete --dry-run"
+        return 1
+    fi
+    
+    local local_path="$PROJ_LOCAL_BASE/$project/"
+    local remote_path
+    
+    if [[ "$remote" == "remote" ]]; then
+        remote_path="$PROJ_REMOTE_BASE/$project/"
+    else
+        # If you have multiple remotes, you can define them here
+        case "$remote" in
+            staging)
+                remote_path="login@staging:/path/to/proj/$project/"
+                ;;
+            prod)
+                remote_path="login@prod:/path/to/proj/$project/"
+                ;;
+            *)
+                echo "Unknown remote: $remote"
+                return 1
+                ;;
+        esac
+    fi
+    
+    if [[ ! -d "$PROJ_LOCAL_BASE/$project" ]]; then
+        echo "Project directory $PROJ_LOCAL_BASE/$project does not exist"
+        return 1
+    fi
+    
+    echo "Syncing $project up to $remote..."
+    echo "rsync options: ${rsync_opts[*]}"
+    rsync -avzu --exclude-from=$EXCLUDE --progress "${rsync_opts[@]}" "$local_path" "$remote_path"
+}
+
+# Sync project down from remote
+syncdown() {
+    local project="$1"
+    shift
+    local remote="remote"
+    local rsync_opts=()
+    
+    # Parse arguments - look for remote alias or rsync options
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            staging|prod|remote)
+                remote="$1"
+                ;;
+            --*)
+                rsync_opts+=("$1")
+                ;;
+            *)
+                rsync_opts+=("$1")
+                ;;
+        esac
+        shift
+    done
+    
+    if [[ -z "$project" ]]; then
+        echo "Usage: syncdown <project> [remote_alias] [rsync_options...]"
+        echo "Example: syncdown project1 --delete"
+        echo "Example: syncdown project1 staging --delete --dry-run"
+        return 1
+    fi
+    
+    local local_path="$PROJ_LOCAL_BASE/$project/"
+    local remote_path
+    
+    if [[ "$remote" == "remote" ]]; then
+        remote_path="$PROJ_REMOTE_BASE/$project/"
+    else
+        # Multiple remotes support
+        case "$remote" in
+            staging)
+                remote_path="login@staging:/path/to/proj/$project/"
+                ;;
+            prod)
+                remote_path="login@prod:/path/to/proj/$project/"
+                ;;
+            *)
+                echo "Unknown remote: $remote"
+                return 1
+                ;;
+        esac
+    fi
+    
+    # Create local directory if it doesn't exist
+    mkdir -p "$PROJ_LOCAL_BASE/$project"
+    
+    echo "Syncing $project down from $remote..."
+    echo "rsync options: ${rsync_opts[*]}"
+    rsync -avzu --exclude-from=$EXCLUDE --progress "${rsync_opts[@]}" "$remote_path" "$local_path"
+}
+
+# List available projects (local)
+syncls() {
+    echo "Local projects:"
+    ls -1 "$PROJ_LOCAL_BASE" 2>/dev/null || echo "No projects found in $PROJ_LOCAL_BASE"
+}
+
+# List projects on remote
+syncls-remote() {
+    local remote="${1:-remote}"
+    local remote_base
+    
+    if [[ "$remote" == "remote" ]]; then
+        remote_base="$PROJ_REMOTE_BASE"
+    else
+        case "$remote" in
+            staging)
+                remote_base="login@staging:/path/to/proj"
+                ;;
+            prod)
+                remote_base="login@prod:/path/to/proj"
+                ;;
+            *)
+                echo "Unknown remote: $remote"
+                return 1
+                ;;
+        esac
+    fi
+    
+    echo "Projects on $remote:"
+    ssh "${remote_base%:*}" "ls -1 ${remote_base#*:}" 2>/dev/null || echo "Could not list remote projects"
+}
+
+# Dry run functions (add --dry-run to see what would be synced)
+syncup-dry() {
+    syncup "$@" --dry-run
+}
+
+syncdown-dry() {
+    syncdown "$@" --dry-run
+}

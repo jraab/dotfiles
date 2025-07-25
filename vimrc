@@ -8,4 +8,7 @@ set ruler
 set autoindent
 set shiftwidth=3
 set shiftround
+set vb
+
+
 
