@@ -1,6 +1,13 @@
 # ~/.config/bash/macos - macOS-specific shell settings
 # Managed by chezmoi
 
+# Homebrew (Apple Silicon vs Intel) - must come first so gls is on PATH
+if [[ -f /opt/homebrew/bin/brew ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [[ -f /usr/local/bin/brew ]]; then
+    eval "$(/usr/local/bin/brew shellenv)"
+fi
+
 # Colors
 alias grep='grep --color=auto'
 
@@ -12,13 +19,6 @@ else
     export CLICOLOR=1
     export LSCOLORS=ExFxCxDxBxegedabagacad
     alias ls='ls -lh'
-fi
-
-# Homebrew (Apple Silicon vs Intel)
-if [[ -f /opt/homebrew/bin/brew ]]; then
-    eval "$(/opt/homebrew/bin/brew shellenv)"
-elif [[ -f /usr/local/bin/brew ]]; then
-    eval "$(/usr/local/bin/brew shellenv)"
 fi
 
 # Silence zsh default shell warning on macOS
