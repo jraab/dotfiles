@@ -2,11 +2,9 @@
 # Managed by chezmoi
 
 # Colors
-export GREP_OPTIONS='--color=auto'
-export GREP_COLOR='1;32'
+alias grep='grep --color=auto'
 export CLICOLOR=1
 export LSCOLORS=ExFxCxDxBxegedabagacad
-export LS_OPTS='--color=auto'
 
 # Homebrew (Apple Silicon vs Intel)
 if [[ -f /opt/homebrew/bin/brew ]]; then

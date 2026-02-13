@@ -1,0 +1,43 @@
+# ~/.gitignore - Global git ignore patterns
+# Managed by chezmoi
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+Icon
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+*.egg
+.venv/
+venv/
+
+# R / RStudio
+.Rhistory
+.Rapp.history
+.RData
+.RDataTmp
+.Ruserdata
+.Rproj.user/
+.httr-oauth
+.Renviron
+*_cache/
+rsconnect/
+
+# Editors
+*.swp
+*.swo
+*~
+.idea/
+.vscode/settings.json
+
+# Environment / secrets
+.env
+.env.local

@@ -19,3 +19,11 @@ shopt -s histappend
 # Shell options
 shopt -s checkwinsize
 shopt -s globstar 2>/dev/null
+
+# Prompt
+__prompt_git() {
+    local branch
+    branch=$(git symbolic-ref --short HEAD 2>/dev/null) || return
+    echo " ($branch)"
+}
+PS1='\[\e[32m\]\u@\h\[\e[0m\]:\[\e[34m\]\w\[\e[33m\]$(__prompt_git)\[\e[0m\] \$ '
