@@ -11,3 +11,5 @@ export DOTNET_ROOT=$HOME/dotnet
 
 
 [[ -f ~/.config/bash/sync-functions ]] && source ~/.config/bash/sync-functions
+
+alias claude="/Users/jraab/.claude/local/claude"
