@@ -1,0 +1,5 @@
+# ~/.config/bash/aliases - Shared aliases for all platforms
+# Managed by chezmoi
+
+alias ll='ls -alh'
+alias longleaf='ssh -X jraab@longleaf.its.unc.edu'

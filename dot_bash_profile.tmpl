@@ -1,0 +1,27 @@
+# ~/.bash_profile - Login shell configuration
+# Managed by chezmoi ({{ .chezmoi.os }}/{{ .chezmoi.arch }})
+# Do not edit directly - run: chezmoi edit ~/.bash_profile
+
+# Disable bell
+bind 'set bell-style none' 2>/dev/null
+
+# Source .bashrc for interactive settings
+if [[ -f ~/.bashrc ]]; then
+    source ~/.bashrc
+fi
+
+{{ if eq .chezmoi.os "darwin" -}}
+# Conda (macOS - miniconda3)
+if [[ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]]; then
+    source "$HOME/miniconda3/etc/profile.d/conda.sh"
+elif [[ -d "$HOME/miniconda3" ]]; then
+    export PATH="$HOME/miniconda3/bin:$PATH"
+fi
+{{ else -}}
+# Conda (Linux)
+if [[ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]]; then
+    source "$HOME/miniconda3/etc/profile.d/conda.sh"
+elif [[ -f "$HOME/anaconda3/etc/profile.d/conda.sh" ]]; then
+    source "$HOME/anaconda3/etc/profile.d/conda.sh"
+fi
+{{ end -}}

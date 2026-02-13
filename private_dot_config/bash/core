@@ -1,0 +1,21 @@
+# ~/.config/bash/core - Shared shell settings for all platforms
+# Managed by chezmoi - edit source at ~/.local/share/chezmoi/
+
+# PATH
+export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+
+# Terminal
+export TERM=xterm-color
+
+# Editor
+export EDITOR=vim
+
+# History
+export HISTSIZE=10000
+export HISTFILESIZE=20000
+export HISTCONTROL=ignoredups:erasedups
+shopt -s histappend
+
+# Shell options
+shopt -s checkwinsize
+shopt -s globstar 2>/dev/null

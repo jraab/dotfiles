@@ -1,0 +1,15 @@
+# ~/.gitconfig - Git configuration
+# Managed by chezmoi
+
+[user]
+    name = {{ .name }}
+    email = {{ .email }}
+
+[core]
+    excludesfile = ~/.gitignore
+
+[filter "lfs"]
+    process = git-lfs filter-process
+    required = true
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
