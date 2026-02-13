@@ -1,0 +1,8 @@
+# README is for humans reading the repo, not a managed dotfile
+README.md
+docs/
+
+# Skip Claude Code config on Linux (not installed there)
+{{ if ne .chezmoi.os "darwin" }}
+.claude/**
+{{ end }}
