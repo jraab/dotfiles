@@ -3,8 +3,16 @@
 
 # Colors
 alias grep='grep --color=auto'
-export CLICOLOR=1
-export LSCOLORS=ExFxCxDxBxegedabagacad
+
+# Use GNU ls (from coreutils) for --group-directories-first support
+# Falls back to BSD ls with CLICOLOR if gls isn't available
+if command -v gls &>/dev/null; then
+    alias ls='gls --color=auto --group-directories-first -lh'
+else
+    export CLICOLOR=1
+    export LSCOLORS=ExFxCxDxBxegedabagacad
+    alias ls='ls -lh'
+fi
 
 # Homebrew (Apple Silicon vs Intel)
 if [[ -f /opt/homebrew/bin/brew ]]; then

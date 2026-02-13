@@ -1,7 +1,10 @@
 # ~/.config/bash/aliases - Shared aliases for all platforms
 # Managed by chezmoi
 
-alias ll='ls -alh'
+# ls family - OS-specific file defines base ls (color, dirs-first, long format)
+alias ll='ls -l'
+alias la='ls -alH'
+
 alias longleaf='ssh -X jraab@longleaf.its.unc.edu'
 
 # Chezmoi shortcuts
