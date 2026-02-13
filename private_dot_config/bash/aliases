@@ -3,3 +3,13 @@
 
 alias ll='ls -alh'
 alias longleaf='ssh -X jraab@longleaf.its.unc.edu'
+
+# Chezmoi shortcuts
+alias dotcd='chezmoi cd'
+dotpush() {
+    local msg="${1:-update dotfiles}"
+    chezmoi apply && \
+    git -C "$(chezmoi source-path)" add -A && \
+    git -C "$(chezmoi source-path)" commit -m "$msg" && \
+    git -C "$(chezmoi source-path)" push
+}
