@@ -197,8 +197,8 @@ claude-sync() {
         if [[ -d "$skills_dir/.git" ]]; then
             git -C "$skills_dir" pull --rebase
         fi
-        echo "==> Applying chezmoi..."
-        chezmoi apply
+        echo "==> Updating chezmoi..."
+        chezmoi update
     fi
 
     echo "==> Done."
