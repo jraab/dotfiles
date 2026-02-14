@@ -168,3 +168,38 @@ syncup-dry() {
 syncdown-dry() {
     syncdown "$@" --dry-run
 }
+
+# Sync Claude Code config across machines
+# Usage: claude-sync         (push local changes, then pull remote)
+#        claude-sync push    (only push local skill changes)
+#        claude-sync pull    (only pull remote changes + chezmoi apply)
+claude-sync() {
+    local action="${1:-both}"
+    local skills_dir="$HOME/.claude/skills"
+
+    if [[ "$action" == "push" || "$action" == "both" ]]; then
+        if [[ -d "$skills_dir/.git" ]]; then
+            echo "==> Pushing skill changes..."
+            if git -C "$skills_dir" diff --quiet && git -C "$skills_dir" diff --cached --quiet && [[ -z "$(git -C "$skills_dir" ls-files --others --exclude-standard)" ]]; then
+                echo "    No local changes."
+            else
+                git -C "$skills_dir" add -A
+                git -C "$skills_dir" commit -m "sync skills $(date +%Y-%m-%d)"
+                git -C "$skills_dir" push
+            fi
+        else
+            echo "    Skills directory is not a git repo, skipping push."
+        fi
+    fi
+
+    if [[ "$action" == "pull" || "$action" == "both" ]]; then
+        echo "==> Pulling remote changes..."
+        if [[ -d "$skills_dir/.git" ]]; then
+            git -C "$skills_dir" pull --rebase
+        fi
+        echo "==> Applying chezmoi..."
+        chezmoi apply
+    fi
+
+    echo "==> Done."
+}
