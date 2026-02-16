@@ -13,12 +13,13 @@
   },
   "feedbackSurveyState": {
     "lastShownTime": 1754149133607
-  }
+  }, 
   "allowedTools": [
    "Bash(ls:*)",
    "Bash(wc:*)", 
    "Bash(cat:*)", 
-   "Bash(grep:*)"
-   } 
+   "Bash(grep:*)",
+   "Read(~/.claude/skills/*)"
+   ] 
 
 }
