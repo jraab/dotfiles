@@ -19,7 +19,8 @@
    "Bash(wc:*)", 
    "Bash(cat:*)", 
    "Bash(grep:*)",
-   "Read(~/.claude/skills/*)"
+   "Read(~/.claude/skills/*)", 
+   "ls *", 
+   "cat *"
    ] 
-
 }
