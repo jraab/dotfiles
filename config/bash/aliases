@@ -1,0 +1,22 @@
+# ~/.config/bash/aliases - Shared aliases for all platforms
+
+# ls family - OS-specific file defines base ls (color, dirs-first, long format)
+alias ll='ls -lh'
+alias la='ls -alH'
+alias cc='claude code'
+
+alias longleaf='ssh -X jraab@longleaf.its.unc.edu'
+
+# Dotfile shortcuts
+alias dotcd='cd ~/dotfiles'
+
+dotpush() {
+    local msg="${1:-update dotfiles}"
+    git -C ~/dotfiles add -A && \
+    git -C ~/dotfiles commit -m "$msg" && \
+    git -C ~/dotfiles push
+}
+
+dotpull() {
+    git -C ~/dotfiles pull
+}
