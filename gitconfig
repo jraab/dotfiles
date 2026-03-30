@@ -1,0 +1,27 @@
+# ~/.gitconfig - Git configuration
+
+[user]
+    name = Jesse Raab
+    email = jesse.r.raab@gmail.com
+
+[alias]
+    st = status
+    co = checkout
+    br = branch
+    ci = commit
+    ca = commit --amend
+    d = diff
+    ds = diff --staged
+    lg = log --oneline --graph --decorate -20
+    lga = log --oneline --graph --decorate --all
+    last = log -1 HEAD --stat
+    unstage = reset HEAD --
+
+[core]
+    excludesfile = ~/.gitignore
+
+[filter "lfs"]
+    process = git-lfs filter-process
+    required = true
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
