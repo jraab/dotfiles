@@ -185,6 +185,15 @@ claude-sync() {
             else
                 git -C "$skills_dir" add -A
                 git -C "$skills_dir" commit -m "sync skills $(date +%Y-%m-%d)"
+                # Rebase onto origin BEFORE pushing. If another machine pushed
+                # since our last pull, a bare push is rejected (non-fast-forward)
+                # and leaves the branch diverged. Rebasing first replays our
+                # commit on top of theirs so the push fast-forwards cleanly.
+                if ! git -C "$skills_dir" pull --rebase; then
+                    echo "    Rebase conflict — resolve in $skills_dir, then run:"
+                    echo "      git rebase --continue && git push"
+                    return 1
+                fi
                 git -C "$skills_dir" push
             fi
         else
